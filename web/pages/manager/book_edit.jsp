@@ -23,7 +23,7 @@
 </head>
 <body>
 		<div id="header">
-			<img class="logo_img" alt="" src="../../static/img/logouestc.png" >
+			<img class="logo_img" alt="" src="static/img/logouestc.png" >
 			<span class="wel_word">编辑图书</span>
 			<%@include file="/pages/common/manager_menu.jsp"%>
 
@@ -31,6 +31,7 @@
 		
 		<div id="main">
 			<form action="manager/bookServlet" method="get">
+				<input type="hidden" name="pageNo" value="${param.pageNo}">
 				<input type="hidden"name="action" value=${empty param.id?"add":"update"}>
 				<input type="hidden"name="id"value="${requestScope.book.id}">
 				<table>

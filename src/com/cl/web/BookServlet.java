@@ -37,6 +37,8 @@ public class BookServlet extends BaseServlet{
 
 
     protected void add(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        int pageNo = WebUtils.parseInt(req.getParameter("pageNo"),0);
+        pageNo+=1;
         //1.获取请求的参数==封装成为Book对象
         Book book = WebUtils.copyParamToBean(req.getParameterMap(), new Book());
 
@@ -50,7 +52,7 @@ public class BookServlet extends BaseServlet{
         //请求转发的'/'表示到工程名，重定向的'/'表示到端口号
         //这里使用重定向
         //System.out.println(req.getContextPath());
-        resp.sendRedirect(req.getContextPath() + "/manager/bookServlet?action=list");
+        resp.sendRedirect(req.getContextPath() + "/manager/bookServlet?action=page&pageNo="+pageNo);
 
     }
 
@@ -60,7 +62,7 @@ public class BookServlet extends BaseServlet{
         //2.调用bookService.deleteBookById();删除图书
         bookService.deleteBookById(id);
         //3.重定向回图书列表的管理页面
-        resp.sendRedirect(req.getContextPath()+"/manager/bookServlet?action=list");
+        resp.sendRedirect(req.getContextPath()+"/manager/bookServlet?action=page&pageNo="+req.getParameter("pageNo"));
     }
 
     protected void update(HttpServletRequest req, HttpServletResponse resp) throws IOException {
@@ -69,7 +71,7 @@ public class BookServlet extends BaseServlet{
         //2.调用BookService.updateBook(book);修改图书
         bookService.updateBook(book);
         //3.重定向回图书列表管理页面
-        resp.sendRedirect(req.getContextPath()+"/manager/bookServlet?action=list");
+        resp.sendRedirect(req.getContextPath()+"/manager/bookServlet?action=page&pageNo="+req.getParameter("pageNo"));
     }
     protected void getBook(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //1.获取请求的参数 图书编号
