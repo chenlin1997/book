@@ -38,4 +38,13 @@
         <servlet-name>BookServlet</servlet-name>
         <url-pattern>/manager/bookServlet</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>CilentBookServlet</servlet-name>
+        <servlet-class>com.cl.web.CilentBookServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CilentBookServlet</servlet-name>
+        <url-pattern>/client/bookServlet</url-pattern>
+    </servlet-mapping>
 </web-app>
