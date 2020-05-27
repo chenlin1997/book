@@ -66,7 +66,7 @@
 				<td><a href="pages/manager/book_edit.jsp?pageNo=${requestScope.page.pageTotal}">添加图书</a></td>
 			</tr>	
 		</table>
-
+		<%--分页开始--%>
 		<div id="page_nav">
 			<%--大于1，才显示首页和上一页--%>
 			<c:if test="${requestScope.page.pageNo>1}">
@@ -155,6 +155,7 @@
 				})
 			</script>
 		</div>
+		<%--分页结束--%>
 	</div>
 
 	<%@include file="/pages/common/footer.jsp"%>
