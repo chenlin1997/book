@@ -19,8 +19,8 @@
 </head>
 <body>
 		<div id="header">
-				<img class="logo_img" alt="" src="static/img/logouestc.png" >
-				<span class="wel_word"></span>
+				<img class="logo_img" alt="" src="static/img/logouestc_2.png" >
+				<%--<span class="wel_word"></span>--%>
 			<%--静态包含登录成功之后的菜单--%>
 			<%@include file="/pages/common/login_success_menu.jsp"%>
 		</div>

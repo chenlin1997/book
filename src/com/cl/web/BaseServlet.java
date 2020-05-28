@@ -15,7 +15,11 @@ public abstract class BaseServlet extends HttpServlet {
     }
 
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws UnsupportedEncodingException {
+        //解决post请求中文乱码问题，一定要在获取请求参数之前调用才有效
         req.setCharacterEncoding("UTF-8");//防止乱码的代码，参考网上
+        //解决响应中文乱码问题
+        resp.setContentType("text/html;charset=UTF-8");
+
         String action = req.getParameter("action");
 
 //        if ("login".equals(action)) {
