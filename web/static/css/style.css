@@ -25,8 +25,7 @@ div{
 #main {
 	height: 460px;
 	width: 1200px;
-	border: 1px black solid;
-
+	border: 1px #000000 solid;
 }
 
 #bottom {
