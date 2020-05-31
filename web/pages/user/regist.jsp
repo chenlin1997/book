@@ -10,6 +10,21 @@
 	<script type="text/javascript">
 		//页面加载完成之后
 		$(function () {
+
+			$("#username").blur(function () {
+				//1、获取用户名
+				var username = this.value;
+				//2、Ajax请求
+				$.getJSON("http://localhost:8080/book/userServlet","action=ajaxExistsUsername&username="+username,function (data) {
+					if (data.existsUsername){
+						$("span.errorMsg").text("用户名已存在");
+					}else {
+						$("span.errorMsg").text("用户名可用");
+					}
+					// console.log(data)
+				});
+			})
+
 			/*给验证码图片绑定单击事件，看不清刷新*/
 			$("#code_img").click(function () {
 				this.src="${basePath}kaptcha.jpg?d="+new Date();

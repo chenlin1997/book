@@ -7,11 +7,14 @@ import com.cl.pojo.CartItem;
 import com.cl.service.BookService;
 import com.cl.service.impl.BookServiceImpl;
 import com.cl.utils.WebUtils;
+import com.google.gson.Gson;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CartServlet extends BaseServlet{
 
@@ -103,5 +106,43 @@ public class CartServlet extends BaseServlet{
         req.getSession().setAttribute("lastName",cartItem.getName());
         // 重定向回原来商品所在的地址页面
         resp.sendRedirect(req.getHeader("Referer"));
+    }
+
+
+    /**
+     * 加入购物车
+     * @param req
+     * @param resp
+     * @throws ServletException
+     * @throws IOException
+     */
+    protected void ajaxAddItem(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //获取请求参数，商品编号
+        int id = WebUtils.parseInt(req.getParameter("id"),0);
+        //调用 bookService.queryBookById(id):Book 得到图书的信息
+        Book book = bookService.queryBookById(id);
+        // 把图书信息，转换成为 CartItem 商品项
+        CartItem cartItem = new CartItem(book.getId(),book.getName(),1,book.getPrice(),book.getPrice());
+        // 调用 Cart.addItem(CartItem);添加商品项
+        Cart cart = (Cart) req.getSession().getAttribute("cart");
+        if (cart == null) {
+            cart = new Cart();
+            req.getSession().setAttribute("cart",cart);
+        }
+        cart.addItem(cartItem);
+        System.out.println(cart);
+        //最后一个添加的商品名称
+        req.getSession().setAttribute("lastName",cartItem.getName());
+
+        //6、返回购物车总的商品数量和最后一个添加的商品名称
+        Map<String,Object>resultMap = new HashMap<String,Object>();
+
+        resultMap.put("totalCount",cart.getTotalCount());
+        resultMap.put("lastName",cartItem.getName());
+
+        Gson gson = new Gson();
+        String resultMapJsonString = gson.toJson(resultMap);
+
+        resp.getWriter().write(resultMapJsonString);
     }
 }
